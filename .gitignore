@@ -1,0 +1,5 @@
+node_modules/
+android/
+scraper/tmp/
+*.apk
+.DS_Store
