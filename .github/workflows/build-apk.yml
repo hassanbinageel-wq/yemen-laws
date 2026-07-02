@@ -1,0 +1,69 @@
+name: تحديث قاعدة القوانين (Scrape Laws)
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'عدد القوانين (اتركه فارغاً لسحب الكل — للاختبار جرّب 10)'
+        required: false
+        default: ''
+      force:
+        description: 'إعادة سحب القوانين الموجودة مسبقاً'
+        type: boolean
+        required: false
+        default: false
+      only:
+        description: 'معرّفات محددة مفصولة بفواصل مثل: 15,247 (اختياري)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: جلب المستودع
+        uses: actions/checkout@v4
+
+      - name: تجهيز Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: تثبيت أداة استخراج PDF
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+
+      - name: تثبيت الاعتماديات
+        run: npm install --no-audit --no-fund
+
+      - name: تشغيل السحب
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.limit }}" ]; then ARGS="$ARGS --limit ${{ github.event.inputs.limit }}"; fi
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
+          if [ -n "${{ github.event.inputs.only }}" ]; then ARGS="$ARGS --only ${{ github.event.inputs.only }}"; fi
+          echo "node scraper/scrape.js $ARGS"
+          node scraper/scrape.js $ARGS
+
+      - name: حفظ البيانات في المستودع
+        run: |
+          git config user.name "laws-bot"
+          git config user.email "actions@github.com"
+          git add www/data scraper/report.json
+          if git diff --cached --quiet; then
+            echo "لا توجد تغييرات جديدة"
+          else
+            git commit -m "تحديث قاعدة القوانين — $(date -u +'%Y-%m-%d %H:%M')"
+            git push
+          fi
+
+      - name: رفع تقرير الجودة
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scrape-report
+          path: scraper/report.json
+          if-no-files-found: ignore
