@@ -1,0 +1,54 @@
+name: بناء تطبيق أندرويد (Build APK)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'www/**'
+      - 'capacitor.config.json'
+      - 'package.json'
+      - '.github/workflows/build-apk.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: جلب المستودع
+        uses: actions/checkout@v4
+
+      - name: تجهيز Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: تجهيز Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: تثبيت الاعتماديات
+        run: npm install --no-audit --no-fund
+
+      - name: إنشاء مشروع أندرويد
+        run: test -d android || npx cap add android
+
+      - name: مزامنة الملفات
+        run: npx cap sync android
+
+      - name: بناء APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: إعادة تسمية الملف
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk yemen-laws.apk
+
+      - name: رفع APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: yemen-laws-apk
+          path: yemen-laws.apk

@@ -1,0 +1,12 @@
+{
+  "appId": "com.hsnpmt.yemenlaws",
+  "appName": "قوانين وتشريعات اليمن",
+  "webDir": "www",
+  "backgroundColor": "#0D1321",
+  "android": {
+    "allowMixedContent": false
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

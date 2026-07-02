@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0D1321" />
+  <title>قوانين وتشريعات اليمن</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button id="btn-back" class="icon-btn hidden" aria-label="رجوع">←</button>
+      <div class="brand">
+        <div class="brand-name">قوانين وتشريعات اليمن</div>
+        <div class="brand-sub" id="topbar-sub">المكتبة القانونية اليمنية — بدون إنترنت</div>
+      </div>
+      <div class="topbar-actions" id="topbar-actions"></div>
+    </div>
+    <div class="gold-rule"></div>
+  </header>
+
+  <main id="view" class="view" tabindex="-1"></main>
+
+  <nav class="bottomnav" aria-label="التنقل الرئيسي">
+    <a href="#/home" data-nav="home" class="nav-item">
+      <span class="nav-ic">◈</span><span>الرئيسية</span>
+    </a>
+    <a href="#/library" data-nav="library" class="nav-item">
+      <span class="nav-ic">▤</span><span>المكتبة</span>
+    </a>
+    <a href="#/search" data-nav="search" class="nav-item nav-search">
+      <span class="nav-ic nav-ic-search">⌕</span><span>بحث</span>
+    </a>
+    <a href="#/favorites" data-nav="favorites" class="nav-item">
+      <span class="nav-ic">★</span><span>المفضلة</span>
+    </a>
+    <a href="#/about" data-nav="about" class="nav-item">
+      <span class="nav-ic">؟</span><span>حول</span>
+    </a>
+  </nav>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="modal-root"></div>
+
+  <script src="js/normalize.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

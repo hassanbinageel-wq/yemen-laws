@@ -1,0 +1,23 @@
+{
+ "meta": {
+  "app": "قوانين وتشريعات اليمن",
+  "source": "https://www.cocayemen.com/laws",
+  "generated_at": "2026-07-02T17:51:13.235Z",
+  "laws": 1,
+  "articles": 8,
+  "sample": true
+ },
+ "laws": [
+  {
+   "id": "15",
+   "title": "(1-1990) العلم الوطني",
+   "number": "1",
+   "year": "1990",
+   "type": "قرار",
+   "category": "سيادي وهوية وطنية",
+   "isAmendment": false,
+   "articleCount": 8,
+   "hasText": true
+  }
+ ]
+}

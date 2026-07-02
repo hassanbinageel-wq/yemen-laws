@@ -1,0 +1,19 @@
+{
+  "name": "yemen-laws-app",
+  "version": "1.0.0",
+  "description": "قوانين وتشريعات اليمن — مكتبة قانونية يمنية تعمل بدون إنترنت",
+  "private": true,
+  "scripts": {
+    "scrape": "node scraper/scrape.js",
+    "sync": "cap sync android",
+    "build:android": "cap sync android && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/core": "^6.2.0",
+    "cheerio": "^1.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0"
+  }
+}
